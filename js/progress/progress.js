@@ -1,6 +1,6 @@
 (function() {
 	progress = function(el, options){
-		var defaults = {
+		var opts = {
 			direction: "horizontal",
 			size: 500,
 			min_value: 0,
@@ -8,13 +8,37 @@
 			current_value: 0,
 			
 			css: "style/progress.css",
-			class: "progress"
+			class: "progress",
+			
+			discrete: false,
+			step: 0
 		};
 		
 		this.set = function(val, duration) {
 		};
 		
 		// initialization
+		// 1. Extend the default options with the user data
+		if ("object" == typeof(options) && null != typeof(options)) {
+			for (var idx in options) {
+				if (options.hasOwnProperty(idx)) {
+					opts[idx] = options[idx];
+				}
+			}
+		}
+		
+		// 2. load styles
+		window.progressStyles = window.progressStyles || {};
+		if ("undefined" == typeof(window.progressStyles[opts.css])) {
+			var st = document.createElement("LINK");
+			st.rel = "stylesheet";
+			st.href = opts.css;
+			st.media = "screen";
+			document.head.appendChild(st);
+			window.progressStyles[opts.css] = st;
+		}
+		
+		// create the progress elements
 		
 	}
 	return progress;
