@@ -1,0 +1,58 @@
+.progress {
+	float: left;
+	margin-right: 15px;
+}
+
+
+
+/** timeline styles **/
+.timeline .progress__container {
+	background: url(img/tube-blue.png) transparent center bottom no-repeat;
+}
+
+.timeline .progress__container:before {
+	display: block;
+	background: url(img/time-bottom.png) transparent center bottom no-repeat;
+	content: '';
+	height: 15px;
+	margin-top: 453px;
+}
+
+.timeline .progress__container__stuff {
+	bottom: 45px;
+	background: url(img/time-stuff.png) transparent center top repeat-y;
+}
+
+.timeline .progress__container__stuff:after {
+	display: block;
+	content: '';
+	background: url(img/time-lid.png) transparent center bottom no-repeat;
+	height: 25px;
+	margin-top: -11px;
+}
+
+
+/** tokens styles **/
+.tokens .progress__container {
+	background: url(img/tube-pink.png) transparent center bottom no-repeat;
+}
+.tokens .progress__container:before {
+	display: block;
+	background: url(img/tokens-bottom.png) transparent center bottom no-repeat;
+	content: '';
+	height: 12px;
+	margin-top: 457px;
+}
+
+.tokens .progress__container__stuff {
+	bottom: 43px;
+	background: url(img/tokens-stuff.png) transparent center top repeat-y;
+}
+
+.tokens .progress__container__stuff:after {
+	display: block;
+	content: '';
+	background: url(img/tokens-lid.png) transparent center bottom no-repeat;
+	height: 15px;
+	margin-top: -9px;
+}
