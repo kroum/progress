@@ -1,13 +1,12 @@
 (function() {
 	progress = function(el, options){
-		var _stuff, _container, 
+		var _stuff, _container, fillSizeName,
 		opts = {
 			direction: "hor",
 			stuffSize: 500,
 
 			min_value: 0,
 			max_value: 300,
-			sections: [{min:0, max: 300}],
 			current_value: 0,
 
 			css: "style/progress.css",
@@ -19,11 +18,11 @@
 			hasTop: false,
 
 			discrete: false,
-			step: 0
+			stepSize: 0,
+			
+			onDisplay: function() {}
 		};
-		
-		this.set = function(val, duration) {
-		};
+		opts.sections = [{min:opts.min_value, max: opts.max_value, size: opts.stuffSize}];
 
 		// initialization
 		// 1. Extend the default options with the user data
@@ -34,6 +33,7 @@
 				}
 			}
 		}
+		fillSizeName = ("vert" == opts.direction) ? "height" : "width";
 
 		// 2. styles loading 
 		window.progressStyles = window.progressStyles || {};
@@ -64,6 +64,15 @@
 			_container.appendChild(_stuff);
 			el.appendChild(_container);
 		}
+		
+		this.set = function(val, duration) {
+			if (!isNaN(val) && val > opts.min_value) {
+				_stuff.style.display = "block";
+				_stuff.style[fillSizeName] = val+"%";
+				opts.onDisplay();
+			}
+		};
+
 	};
 	return progress;
 })();
@@ -72,11 +81,13 @@ if ("function" == typeof jQuery) {
 	jQuery.fn.progress = function(options) {
 		var self = this;
 		var _items = this.each(function(){
-			this.progress = new progress(this, options);
+			if ("undefined" == typeof(this.progress)) {
+				this.progress = new progress(this, options);
+			}
 		});
 		return {
 			set: function(val, duration) {
-				self.each(_items, function() {
+				self.each(function() {
 					this.progress.set(val, duration);
 				});
 			}

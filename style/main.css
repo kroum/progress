@@ -7,11 +7,11 @@
 
 /** timeline styles **/
 .timeline .progress__container {
-	background: url(img/tube-blue.png) transparent center bottom no-repeat;
+	background: url(img/time-tube.png) transparent center bottom no-repeat;
 }
 
 .timeline .progress__container:before {
-	display: block;
+	display: none;
 	background: url(img/time-bottom.png) transparent center bottom no-repeat;
 	content: '';
 	height: 15px;
@@ -34,10 +34,10 @@
 
 /** tokens styles **/
 .tokens .progress__container {
-	background: url(img/tube-pink.png) transparent center bottom no-repeat;
+	background: url(img/tokens-tube.png) transparent center bottom no-repeat;
 }
 .tokens .progress__container:before {
-	display: block;
+	display: none;
 	background: url(img/tokens-bottom.png) transparent center bottom no-repeat;
 	content: '';
 	height: 12px;

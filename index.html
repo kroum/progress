@@ -10,11 +10,48 @@
       <div id="progress1" class="progress timeline"></div>
       <div id="progress2" class="progress tokens"></div>
       <div id="progress3" class="progress"></div>
+      <div id="progress4" class="progress tokens"></div>
     </div>
     <script>
       (function($){
         $(document).ready(function(){
-          $(".progress").progress({"class":"progress__container"});
+          $(".progress").each(function(i,item) {
+            $item = $(item);
+            switch (item.getAttribute("id")) {
+              case "progress1":
+                $item.progress({
+                  direction: "vert", 
+                  bottomOffset: 45, 
+                  stuffSize: 300, 
+                  min_value: 0, 
+                  max_value:25000, 
+                  onDisplay: function() {
+                    item.firstChild.style["background-position"]="center top";
+                  }
+                });
+                break;
+              case "progress2":
+              case "progress4":
+                $item.progress({
+                  direction: "vert", 
+                  bottomOffset: 43, 
+                  stuffSize: 307, 
+                  min_value: 0, 
+                  max_value:360, 
+                  sections:[{min:0, max:45, size: 14},{min:45, max:160, size: 107},{min:160, max:290, size:107},{min:290, max:360, size: 79}],
+                  onDisplay: function() {
+                    item.firstChild.style["background-position"]="center top";
+                  }
+                });
+                break;
+              default:
+                $(item).progress({direction: "vert"});
+            }
+          });
+          
+          $("#progress1").progress().set(15);
+          $("#progress4").progress().set(20);
+          $("#progress3").progress().set(44);
         });
       })(jQuery)
     </script>
