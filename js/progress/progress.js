@@ -24,7 +24,6 @@
 			onDisplay: function() {},
 			onHide: function() {}
 		};
-		opts.sections = [{min:opts.min_value, max: opts.max_value, size: opts.stuffSize}];
 
 		// initialization
 		// 1. Extend the default options with the user data
@@ -35,6 +34,8 @@
 				}
 			}
 		}
+		if (!opts.sections.length)
+			opts.sections = [{min:opts.min_value, max: opts.max_value, size: opts.stuffSize}];
 		fillSizeName = ("vert" == opts.direction) ? "height" : "width";
 
 		// 2. styles loading 
@@ -77,7 +78,7 @@
 					return 0;
 				} else {
 					if (val >= opts.max_value) {
-						return sectionsLength -1;
+						return sectionsLength - 1;
 					} else {
 						for (var i=0;i<sectionsLength;i++) {
 							if (val < opts.sections[i]["max"]) {
