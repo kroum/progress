@@ -45,12 +45,13 @@
                 });
                 break;
               default:
-                $(item).progress({direction: "vert"});
+                $item.progress({direction: "vert"});
             }
           });
           
           $("#progress1").progress().set(15);
-          $("#progress4").progress().set(20);
+          $("#progress4").progress().set(400);
+          $("#progress2").progress().set(196);
           $("#progress3").progress().set(44);
         });
       })(jQuery)

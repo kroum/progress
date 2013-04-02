@@ -7,7 +7,8 @@
 
 			min_value: 0,
 			max_value: 300,
-			current_value: 0,
+			currentPosition: 0,
+			sections: [],
 
 			css: "style/progress.css",
 			cssClass: "progress__container",
@@ -20,7 +21,8 @@
 			discrete: false,
 			stepSize: 0,
 			
-			onDisplay: function() {}
+			onDisplay: function() {},
+			onHide: function() {}
 		};
 		opts.sections = [{min:opts.min_value, max: opts.max_value, size: opts.stuffSize}];
 
@@ -64,12 +66,62 @@
 			_container.appendChild(_stuff);
 			el.appendChild(_container);
 		}
-		
+
+		var
+		_defineInitSection = function(val) {
+			if (isNaN(val) || val < opts.min_value) {
+				return -1;
+			} else {
+				var sectionsLength = opts.sections.length;
+				if (sectionsLength < 1) {
+					return 0;
+				} else {
+					if (val >= opts.max_value) {
+						return sectionsLength -1;
+					} else {
+						for (var i=0;i<sectionsLength;i++) {
+							if (val < opts.sections[i]["max"]) {
+								return i;
+							}
+						}
+					}
+				}
+			}
+		},
+		_findPosInSection = function(val, minVal, maxVal, sectionSize, step) {
+			if (val > maxVal) val = maxVal;
+
+			var pos = Math.floor(sectionSize * ((val - minVal) / (maxVal - minVal)));
+			if (!isNaN(step) && parseInt(step) > 0) {
+				pos = Math.floor(pos / step) * step;
+			}
+
+			return pos;
+		},
+		_definePos = function(val) {
+			var sectionId = _defineInitSection(val), currPos = 0;
+
+			if (1 > opts.sections.length) {
+				currPos = _findPosInSection(val, opts.min_value, opts.max_value, opts.stuffSize, opts.stepSize);
+			} else {
+				currPos = _findPosInSection(val, opts.sections[sectionId]["min"], opts.sections[sectionId]["max"], opts.sections[sectionId]["size"], opts.stepSize);
+				for (var i=0; i<sectionId; i++) {
+					currPos += opts.sections[i]["size"];
+				}
+			}
+			opts.currentPosition = currPos;
+			return currPos;
+		};
+
 		this.set = function(val, duration) {
 			if (!isNaN(val) && val > opts.min_value) {
 				_stuff.style.display = "block";
-				_stuff.style[fillSizeName] = val+"%";
+				_stuff.style[fillSizeName] = _definePos(val)+"px";
 				opts.onDisplay();
+			} else {
+				opts.onHide();
+				_stuff.style.display = "none";
+				_stuff.style[fillSizeName] = 0;
 			}
 		};
 
